@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4 mt-4">
+        <h1 class="h3 mb-0 text-gray-800">Meeting Reminders</h1>
+        </div>
+
+        <!-- Main Content Here -->
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <div class="row">
+              <div class="col-lg-3"></div>
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Meeting Reminder</h1>
+                  </div>
+{#                    <h1>{{ object.headline }}</h1>#}
+{#                    <p>{{ object.content }}</p>#}
+{#                    <p>Agenda: {{ object.agenda }}</p>#}
+{#                    <p>Venue: {{ object.venue }}</p>#}
+{#                    <p>Date: {{ object.Date|date }}</p>#}
+{#                    <p>Date: {{ now|date }}</p>#}
+                    <ul>
+                    {% for post in object_list %}
+
+                        <div class="col-md-4">
+
+                        <div style="width:max-content;" class="card mb-4 box-shadow" >
+                            <div class="card-body">
+                                <h1 style="font-size: 18px;">{{ post }}</h1>
+                                <h2 style="font-size:12px;font-weight:bold;min-height:42px;">
+                                    {{post.venue|truncatechars:50}}</h2>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">{{post.Date}}</small>
+                                    <small class="text-muted">{{post.Time}}</small>
+                                </div>
+{#                                <small class="text-muted">{{time}}</small>#}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                    {% endfor %}
+                    </ul>
+                  <hr>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+    </div>
+    <!-- /.container-fluid -->
+{% endblock content %}

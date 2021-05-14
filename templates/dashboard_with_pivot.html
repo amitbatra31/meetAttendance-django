@@ -1,0 +1,78 @@
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard with Flexmonster</title>
+  <script src="https://cdn.flexmonster.com/flexmonster.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script>
+        function processData(dataset) {
+    var result = []
+    dataset = JSON.parse(dataset);
+    dataset.forEach(item => result.push(item.fields));
+    return result;
+}
+$.ajax({
+    url: $("#pivot-table-container").attr("data-url"),
+    dataType: 'json',
+    success: function(data) {
+        new Flexmonster({
+            container: "#pivot-table-container",
+            componentFolder: "https://cdn.flexmonster.com/",
+            width: "100%",
+            height: 430,
+            toolbar: true,
+            report: {
+                dataSource: {
+                    type: "json",
+                    data: processData(data)
+                },
+                slice: {}
+            }
+        });
+        new Flexmonster({
+            container: "#pivot-chart-container",
+            componentFolder: "https://cdn.flexmonster.com/",
+            width: "100%",
+            height: 430,
+            //toolbar: true,
+            report: {
+                dataSource: {
+                    type: "json",
+                    data: processData(data),
+                    mapping: {
+    "username": {
+        "caption": "USERNAME",
+        "type": "string"
+    },
+    "Date": {
+        "caption": "Date",
+        "type": "string"
+    },
+    "Time": {
+        "caption": "Time",
+        "type": "string"
+    },
+    "Present": {
+        "caption": "Present",
+        "type": "boolean"
+    },
+
+}
+                },
+                slice: {},
+                "options": {
+                    "viewType": "charts",
+                    "chart": {
+                        "type": "pie"
+                    }
+                }
+            }
+        });
+    }
+});
+    </script>
+  <link rel="stylesheet" href="https://cdn.flexmonster.com/demo.css">
+</head>
+<body>
+<div id="pivot-table-container" data-url="{% url 'pivot_data' %}"></div>
+<div id="pivot-chart-container"></div>
+</body>
